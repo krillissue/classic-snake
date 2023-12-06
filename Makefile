@@ -1,5 +1,5 @@
 CXX := $(or $(shell echo $$CXX),g++)
-CXXFLAGS := -Wall -Wextra -O3 -s -Iinclude $(shell sdl2-config --cflags --libs) $(shell echo $$CXXFLAGS)
+CXXFLAGS := -Wall -Wextra -O3 -s -Iinclude $(shell pkg-config --cflags --libs sdl2 SDL2_image) -lSDL2 $(shell echo $$CXXFLAGS)
 
 SRC_DIR := src
 OBJ_DIR := obj
