@@ -5,7 +5,7 @@ The classic snake game, written in C/C++ and SDL2!
 ## Dependencies
 ### Arch Linux
 ```bash
-sudo pacman -S git sdl2
+sudo pacman -S git sdl2 sdl2_image
 ```
 
 ## Process
