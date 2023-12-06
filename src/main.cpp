@@ -48,14 +48,7 @@ int main(int argc, char *argv[]) {
     crash("SDL_Init failed.");
 
   Window window("Classic Snake", 640, 480, accelerated, vsync);
-  SDL_Event event;
-
-  while (true) {
-    SDL_PollEvent(&event);
-
-    if (event.type == SDL_QUIT)
-      break;
-  }
+  window.mainloop();
 
   window.clean_up();
   SDL_Quit();

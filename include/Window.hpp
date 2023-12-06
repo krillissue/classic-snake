@@ -9,6 +9,7 @@ public:
          bool vsync);
   ~Window();
 
+  void mainloop();
   void clean_up();
 
 private:

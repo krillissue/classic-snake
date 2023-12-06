@@ -25,6 +25,17 @@ Window::Window(const std::string arg_title, int arg_w, int arg_h,
 
 Window::~Window() { clean_up(); }
 
+void Window::mainloop() {
+  SDL_Event event;
+
+  while (true) {
+    SDL_PollEvent(&event);
+
+    if (event.type == SDL_QUIT)
+      break;
+  }
+}
+
 void Window::clean_up() {
   SDL_DestroyRenderer(pr_renderer);
   SDL_DestroyWindow(pr_window);
