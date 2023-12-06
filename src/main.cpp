@@ -1,7 +1,7 @@
-#include <iostream>
 #include <SDL2/SDL.h>
-#include <tools/crash.hpp>
 #include <Window.hpp>
+#include <iostream>
+#include <tools/crash.hpp>
 
 int main(void) {
   if (SDL_Init(SDL_INIT_VIDEO) != EXIT_SUCCESS)

@@ -1,5 +1,5 @@
-#include <iostream>
 #include <SDL2/SDL.h>
+#include <iostream>
 #include <tools/crash.hpp>
 
 void crash(std::string msg) {
