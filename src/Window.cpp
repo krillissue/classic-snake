@@ -5,12 +5,10 @@
 #include <string>
 #include <tools/crash.hpp>
 
-Window::Window(std::string arg_title, int arg_w, int arg_h, bool accelerated,
-               bool vsync)
+Window::Window(std::string title, int w, int h, bool accelerated, bool vsync)
     : pr_window(NULL), pr_renderer(NULL) {
-  pr_window =
-      SDL_CreateWindow(arg_title.c_str(), SDL_WINDOWPOS_UNDEFINED,
-                       SDL_WINDOWPOS_UNDEFINED, arg_w, arg_h, SDL_WINDOW_SHOWN);
+  pr_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED,
+                               SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
 
   if (!pr_window)
     crash("SDL_CreateWindow failed.", ErrorType::SDL);
@@ -27,20 +25,12 @@ Window::Window(std::string arg_title, int arg_w, int arg_h, bool accelerated,
 
 Window::~Window() { clean_up(); }
 
-void Window::mainloop() {
-  SDL_Event event;
-
-  while (true) {
-    SDL_PollEvent(&event);
-
-    if (event.type == SDL_QUIT)
-      break;
-  }
-}
-
 void Window::clean_up() {
   SDL_DestroyRenderer(pr_renderer);
   SDL_DestroyWindow(pr_window);
+
+  for (const Sprite &sprite : pr_sprites)
+    SDL_DestroyTexture(sprite.texture);
 }
 
 void Window::load_sprite(std::string sprite_path, std::string sprite_name) {
@@ -52,3 +42,29 @@ void Window::load_sprite(std::string sprite_path, std::string sprite_name) {
 
   pr_sprites.push_back({.texture = texture, .name = sprite_name});
 }
+
+void Window::render_sprite(std::string sprite_name, int x, int y) {
+  SDL_Texture *sprite_texture = NULL;
+
+  for (const Sprite &sprite : pr_sprites)
+    if (sprite.name == sprite_name)
+      sprite_texture = sprite.texture;
+
+  if (!sprite_texture)
+    crash("Cannot render sprite " + sprite_name +
+              " because it was not found in window.pr_sprites",
+          ErrorType::CUSTOM);
+
+  SDL_Rect dst = {
+      .x = x,
+      .y = y,
+      .w = 0,
+      .h = 0,
+  };
+
+  SDL_QueryTexture(sprite_texture, NULL, NULL, &dst.w, &dst.h);
+  SDL_RenderCopy(pr_renderer, sprite_texture, NULL, &dst);
+}
+
+void Window::display_render() { SDL_RenderPresent(pr_renderer); }
+void Window::clear_render() { SDL_RenderClear(pr_renderer); }

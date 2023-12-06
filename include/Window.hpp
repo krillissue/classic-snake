@@ -7,14 +7,16 @@
 
 class Window {
 public:
-  Window(std::string arg_title, int arg_w, int arg_h, bool accelerated,
-         bool vsync);
+  Window(std::string title, int w, int h, bool accelerated, bool vsync);
   ~Window();
 
-  void mainloop();
   void clean_up();
 
   void load_sprite(std::string sprite_path, std::string sprite_name);
+  void render_sprite(std::string sprite_name, int x, int y);
+
+  void display_render();
+  void clear_render();
 
 private:
   SDL_Window *pr_window;

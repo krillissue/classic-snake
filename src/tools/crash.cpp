@@ -15,6 +15,9 @@ void crash(std::string msg, ErrorType errorType) {
   case ErrorType::IMG:
     std::cerr << "IMG_Error: " << IMG_GetError() << std::endl;
     break;
+
+  case ErrorType::CUSTOM:
+    break;
   }
 
   exit(EXIT_FAILURE);

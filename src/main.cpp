@@ -1,4 +1,5 @@
 #include <ErrorType.hpp>
+#include <Game.hpp>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <Window.hpp>
@@ -53,10 +54,14 @@ int main(int argc, char *argv[]) {
     crash("IMG_Init failed.", ErrorType::IMG);
 
   Window window("Classic Snake", 640, 480, accelerated, vsync);
-  window.mainloop();
+  window.load_sprite("res/gfx/apple.png", "apple");
 
-  window.clean_up();
+  Game game(&window);
+  game.mainloop();
+  game.clean_up();
+
   SDL_Quit();
+  IMG_Quit();
 
   return EXIT_SUCCESS;
 }
