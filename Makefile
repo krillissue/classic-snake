@@ -29,7 +29,7 @@ rebuild: clean $(TARGET)
 
 .PHONY: format
 format:
-	@clang-format -style=llvm -i src include
+	@clang-format -style=llvm -i $(SRC) $(shell find include -type f -name "*.hpp")
 
 .PHONY: install
 install: $(TARGET)
